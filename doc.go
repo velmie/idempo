@@ -17,4 +17,3 @@
 //
 // For HTTP usage, see the middleware package.
 package idempo
-

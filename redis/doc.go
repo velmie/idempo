@@ -8,4 +8,3 @@
 // A per-lock token is used to ensure only the lock owner can commit or unlock.
 // The default Redis key prefix is "idempotency:" (configurable via WithKeyPrefix).
 package redis
-

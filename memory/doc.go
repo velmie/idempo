@@ -4,4 +4,3 @@
 // does not persist across restarts. It starts a background cleanup goroutine; call
 // Store.Close when the store is no longer needed.
 package memory
-

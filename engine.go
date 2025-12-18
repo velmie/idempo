@@ -83,7 +83,7 @@ func NewEngine(store Store, opts ...EngineOption) *Engine {
 	return &Engine{
 		store: store,
 		cfg:   cfg,
-		rng:   rand.New(rand.NewSource(time.Now().UnixNano())),
+		rng:   rand.New(rand.NewSource(time.Now().UnixNano())), //nolint:gosec // jitter does not require crypto randomness
 	}
 }
 
@@ -226,13 +226,14 @@ func waitError(ctx context.Context) error {
 }
 
 const jitterPercent = 20
+const percentDenominator = 100
 
 func (e *Engine) jitterInterval(d time.Duration) time.Duration {
 	if d <= 0 {
 		return d
 	}
 
-	maxDelta := d * jitterPercent / 100
+	maxDelta := d * jitterPercent / percentDenominator
 	if maxDelta <= 0 {
 		return d
 	}

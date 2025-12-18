@@ -252,12 +252,14 @@ var hopByHopHeaders = map[string]struct{}{
 	"Content-Length": {},
 }
 
+const extraBlockedHeadersCapacity = 4
+
 func filterHeaders(src http.Header, allowed map[string]struct{}, maxBytes int64) map[string][]string {
 	if src == nil || len(allowed) == 0 {
 		return map[string][]string{}
 	}
 
-	blocked := make(map[string]struct{}, len(hopByHopHeaders)+4)
+	blocked := make(map[string]struct{}, len(hopByHopHeaders)+extraBlockedHeadersCapacity)
 	for k := range hopByHopHeaders {
 		blocked[k] = struct{}{}
 	}

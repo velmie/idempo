@@ -45,6 +45,8 @@ var (
 	errUnexpectedCreateFlag   = errors.New("unexpected create script flag")
 	errUnexpectedCommitResult = errors.New("unexpected commit script result")
 	errUnexpectedBulkType     = errors.New("unexpected bulk type")
+	errInvalidTTL             = errors.New("idempo/redis: invalid ttl")
+	errEmptyPayload           = errors.New("idempo/redis: empty payload")
 )
 
 func (s *Store) Create(
@@ -269,7 +271,7 @@ func (s *Store) loadEntry(ctx context.Context, key string) (*idempo.Entry, error
 
 func ttlMilliseconds(ttl time.Duration) (int64, error) {
 	if ttl <= 0 {
-		return 0, fmt.Errorf("idempo/redis: invalid ttl: %v", ttl)
+		return 0, fmt.Errorf("%w: %v", errInvalidTTL, ttl)
 	}
 
 	ms := ttl.Milliseconds()
@@ -300,7 +302,7 @@ func encodeValue(token string, payload []byte) []byte {
 
 func splitValue(raw []byte) (token string, payload []byte, err error) {
 	if len(raw) == 0 {
-		return "", nil, errors.New("empty payload")
+		return "", nil, errEmptyPayload
 	}
 
 	nl := bytes.IndexByte(raw, '\n')
