@@ -8,7 +8,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"slices"
 	"sort"
 	"strings"
 
@@ -31,7 +30,7 @@ func fingerprintRequest(r *http.Request, cfg Config, shouldHashBody bool) (idemp
 		if len(vals) == 0 {
 			continue
 		}
-		vals = slices.Clone(vals)
+		vals = append([]string(nil), vals...)
 		sort.Strings(vals)
 		for _, v := range vals {
 			_, _ = hdrHash.Write([]byte(h))

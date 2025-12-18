@@ -2,7 +2,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/velmie/idempo.svg)](https://pkg.go.dev/github.com/velmie/idempo)
 [![Go Report Card](https://goreportcard.com/badge/github.com/velmie/idempo)](https://goreportcard.com/report/github.com/velmie/idempo)
-[![Go Version](https://img.shields.io/badge/go-1.21%2B-00ADD8?logo=go)](go.mod)
+[![Go Version](https://img.shields.io/badge/go-1.20%2B-00ADD8?logo=go)](go.mod)
 [![License](https://img.shields.io/github/license/velmie/idempo)](LICENSE)
 
 `idempo` is a small idempotency engine and `net/http` middleware for implementing the **Idempotency-Key** pattern in Go services.
@@ -11,10 +11,16 @@ It stores the first completed response (configurable) and replays it on subseque
 
 ## Installation
 
-Requires Go 1.21+.
+Requires Go 1.20+.
 
 ```bash
 go get github.com/velmie/idempo
+```
+
+Optional Redis store:
+
+```bash
+go get github.com/velmie/idempo/redis
 ```
 
 ## Quick Start (HTTP middleware)

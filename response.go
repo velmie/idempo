@@ -1,7 +1,5 @@
 package idempo
 
-import "slices"
-
 // Response is a transport-agnostic representation of a handler result.
 // Engine clones Body/Metadata before persisting to avoid races with caller mutations.
 type Response struct {
@@ -24,12 +22,12 @@ func cloneResponse(src *Response) *Response {
 
 	cp := *src
 	if src.Body != nil {
-		cp.Body = slices.Clone(src.Body)
+		cp.Body = append([]byte(nil), src.Body...)
 	}
 	if src.Metadata != nil {
 		cp.Metadata = make(map[string][]string, len(src.Metadata))
 		for k, vals := range src.Metadata {
-			cp.Metadata[k] = slices.Clone(vals)
+			cp.Metadata[k] = append([]string(nil), vals...)
 		}
 	}
 
