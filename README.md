@@ -23,6 +23,12 @@ Optional Redis store:
 go get github.com/velmie/idempo/redis
 ```
 
+Optional MySQL store:
+
+```bash
+go get github.com/velmie/idempo/mysql
+```
+
 ## Quick Start (HTTP middleware)
 
 ```go
@@ -102,6 +108,23 @@ Default error mapping (override via `middleware.WithErrorHandler(...)`):
 - Middleware controls: methods, key validation/requirement, what status codes/headers to store, size limits.
 
 ## Advanced Usage
+
+**MySQL store**
+
+```go
+import (
+	"database/sql"
+
+	_ "github.com/go-sql-driver/mysql"
+
+	"github.com/velmie/idempo"
+	idempomysql "github.com/velmie/idempo/mysql"
+)
+
+db, _ := sql.Open("mysql", "user:pass@tcp(localhost:3306)/app?parseTime=true&loc=UTC")
+store, _ := idempomysql.New(db) // default table: idempo_entries
+engine := idempo.NewEngine(store)
+```
 
 **Redis store**
 
